@@ -6,7 +6,7 @@ Linux平台要先安装此工具才行。
 
 
 
-## 1.作用：
+## 1.使用方法：
 
 mac下 ：
 
@@ -24,7 +24,7 @@ pkg-config --libs --cflags  lua
 
 
 
-### 命令：
+### 常用命令：
 
 ```Shell
 pkg-config --list-all    可以列出所有可使用的包
@@ -63,6 +63,24 @@ echo $PKG_CONFIG_PATH 命令查看路径有没有写到配置路径里边
 
 
 
+### 指定库的路径：
+
+如果使用了库文件的话，在执行的时候还需要设置： LD_LIBRARY_PATH
+
+```shell
+export LD_LIBRARY_PATH=/opt/gtk/lib:$LD_LIBRARY_PATH
+```
+
+
+
+然后使用命令：
+
+```shell
+echo $LD_LIBRARY_PATH  查看路径，看是否把动态库的路径加入到库的路径配置中
+```
+
+
+
 
 
 ## 2.大坑
@@ -79,3 +97,34 @@ gcc -g  test.c  -o  test  ̀pkg-config --cflags --libs  ortp`  //	切记， 切�
 
 
 
+
+
+## 3.进阶
+
+如何自定义 .pc文件 ？
+
+
+
+看Demo:
+
+
+
+```
+Name: opencv
+Description:OpenCV pc file
+Version: 2.4
+Cflags:-I/usr/local/include
+Libs:-L/usr/local/lib –lxxx –lxxx
+```
+
+
+
+记得要把.pc文件的路径写到 **$PKG_CONFIG_PATH** 变量中。
+
+
+
+
+
+-------
+
+完
