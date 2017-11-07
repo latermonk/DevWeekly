@@ -69,7 +69,7 @@ echo $PKG_CONFIG_PATH 命令查看路径有没有写到配置路径里边
 
 编译的时候用 pkg-config 发现始终无法编译通过，总是报错说 xxx库找不到，百思不得姐.
 
-后来网上搜索到 pkg-config 的section 应该用 *倒引号*来包含，如下：
+后来网上搜索到 pkg-config 的section 应该用 **<u>倒引号</u>**来包含，如下：
 
 
 
