@@ -2,13 +2,11 @@
 
 ## why
 
-
+improve of ssh
 
 ## how
 
-
-
-## server
+### server
 
 
 ```
@@ -22,14 +20,14 @@ apt-get install mosh
 ```
 
 
-## client
-### mac:
+### ## client
+#### mac:
 
 ```
 brew install mosh
 ```
 
-### iOS:
+#### iOS:
 
 blink：
 
@@ -37,9 +35,9 @@ blink：
 
 [GitHub](https://github.com/blinksh/blink)
 
-### win32
+#### win32
 
-### Android
+#### Android
 
 Temux
 [Google Play ](https://play.google.com/store/apps/details?id=com.termux)
