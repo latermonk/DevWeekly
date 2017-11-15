@@ -83,38 +83,6 @@ int main(int argc, char*argv[])
 		printf("%s",help);
 		return -1;
 	}
-	/*
-	for (i=3;i<argc;i++)
-	{
-		if (strcmp(argv[i],"--noadapt")==0) adapt=FALSE;
-		if (strcmp(argv[i],"--format")==0){
-			i++;
-			if (i<argc){
-				if (strcmp(argv[i],"mulaw")==0){
-					format=MULAW;
-				}else
-				if (strcmp(argv[i],"alaw")==0){
-					format=ALAW;
-				}else{
-					printf("Unsupported format %s\n",argv[i]);
-					return -1;
-				}
-			}
-		}
-		else if (strcmp(argv[i],"--soundcard")==0){
-			soundcard=1;
-		}
-		else if (strcmp(argv[i],"--with-jitter")==0){
-			i++;
-			if (i<argc){
-				jittcomp=atoi(argv[i]);
-				printf("Using a jitter buffer of %i milliseconds.\n",jittcomp);
-			}
-		}
-	}
-
-	*/
-
 	
 	outfile=fopen(argv[1],"wb");
 	if (outfile==NULL) {
