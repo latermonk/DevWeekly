@@ -109,25 +109,19 @@ linphone_core_init主要功能：
 
 
 ```
-ortp_init();
+1.ortp_init();
 
-ms_init();
+2.ms_init();
 
-lc->sal=sal_init();
+3.lc->sal=sal_init();
 
-初始化配置信息：
+4.初始化配置信息：
 
-
-remote_provisioning_uri = linphone_core_get_provisioning_uri(lc);
-
-
-	if (remote_provisioning_uri == NULL) {
-		linphone_configuring_terminated(lc, LinphoneConfiguringSkipped, NULL);
-	} // else linphone_core_start will be called after the remote provisioning (see linphone_core_iterate)
-	lc->bw_controller = ms_bandwidth_controller_new();
 ```
 
 ## ortp_init
+
+
 ## ms_init
 ## lc->sal=sal_init
 ## configure_init
