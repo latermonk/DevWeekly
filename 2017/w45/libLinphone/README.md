@@ -1,3 +1,13 @@
+
+# liblinphone &  bellesip  &  ms2  & ORTP 之间的关系
+
+liblinphone是上层应用,使用bellesip进行sip信令的交互，使用ms2进行媒体流的交互。
+ms2用于设置各种编解码(G.729 264 VP8)并使用oRTP进行传输。
+
+
+
+
+
 # linphone分析
 
 以linphonec.c作为出发点
@@ -131,4 +141,8 @@ linphone_core_init主要功能：
 ## ms_init
 ## lc->sal=sal_init
 ## configure_init
+
+
+
+
 
