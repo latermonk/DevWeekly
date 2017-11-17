@@ -53,6 +53,12 @@ LinphoneCore *_linphone_core_new_with_config(LinphoneCoreCbs *cbs, struct _LpCon
 
 
 
+**真正的初始化函数：
+下边是真正的初始化函数登场：**
+
+
+
+
 ```
 static void linphone_core_init(LinphoneCore * lc, LinphoneCoreCbs *cbs, LpConfig *config, void * userdata){
 
