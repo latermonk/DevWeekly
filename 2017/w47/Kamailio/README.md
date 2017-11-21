@@ -11,7 +11,7 @@
 ./kamctl ul show
 ```
 
-##查看log
+## 查看log
 
 ```
 tail -f /var/log/kamailio.log
