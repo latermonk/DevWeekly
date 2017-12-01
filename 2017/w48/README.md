@@ -1,3 +1,21 @@
+
+
+# ssh usage:
+
+
+```
+#!/usr/bin/expect
+spawn /usr/bin/ssh -nNfT  -D 1080 root@10.252.254.10
+expect "*password:"
+send "this-is-a-ssh-passwd-of-ssh-server\r"
+expect "*]#"
+```
+
+
+-------
+
+
+
 # Linux命令行代理工具：
 
 
@@ -42,5 +60,8 @@ proxychain4 xxxxxxxxx
 
  即可。
 
+
+
+-------
 
 
