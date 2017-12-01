@@ -16,7 +16,7 @@ expect "*]#"
 
 
 
-# Linux命令行代理工具：
+# Linux terminal proxy tool：
 
 
 
