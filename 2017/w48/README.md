@@ -1,7 +1,46 @@
-1.最近也不知道是身体的原因还是什么的 突然有一些不知所措。
+# Linux命令行代理工具：
 
 
 
-2.真的要好好看看源码了，不管是客户端还是服务器的源码都需要好好的看一下了，实现基本的功能真的是很小的一部分，实现系统的优化才是重中之重。
+
+
+```
+cd ~
+git clone https://github.com/rofl0r/proxychains-ng.git
+cd proxychains-ng
+./configure && make && make install
+make install-config
+```
+
+
+**vim /usr/local/etc/proxychains.conf**
+
+替换：
+
+
+```
+socks4 127.0.0.1 9050
+```
+
+为：
+
+
+```
+socks5 127.0.0.1 1080
+```
+
+
+
+
+之后命令行使用代理的时候：
+
+
+
+```
+proxychain4 xxxxxxxxx
+```
+
+ 即可。
+
 
 
