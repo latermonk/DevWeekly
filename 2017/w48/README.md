@@ -5,7 +5,7 @@
 
 ```
 #!/usr/bin/expect
-spawn /usr/bin/ssh -nNfT  -D 1080 root@10.252.254.10
+spawn /usr/bin/ssh -nNfT  -D 1080 root@1.2.3.4
 expect "*password:"
 send "this-is-a-ssh-passwd-of-ssh-server\r"
 expect "*]#"
