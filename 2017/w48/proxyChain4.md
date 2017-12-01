@@ -13,8 +13,7 @@ make install-config
 ```
 
 
-
-vim /usr/local/etc/proxychains.conf
+**vim /usr/local/etc/proxychains.conf**
 
 替换：
 
