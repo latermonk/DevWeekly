@@ -35,6 +35,12 @@ export LD_LIBRARY_PATH=/usr/local/lib64:$LD_LIBRARY_PATH
 
 
 
+/usr/local/lib64/pkgconfig/ortp.pc
+export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:$PKG_CONFIG_PATH
+
+
+/usr/local/lib64/
+export LD_LIBRARY_PATH=/usr/local/lib64/:$LD_LIBRARY_PATH
 
 
 
