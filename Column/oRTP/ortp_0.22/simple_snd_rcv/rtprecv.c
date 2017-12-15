@@ -1,8 +1,24 @@
  /*
-rtpRecv.c
+  The oRTP library is an RTP (Realtime Transport Protocol - rfc3550) stack..
+  Copyright (C) 2001  Simon MORLAT simon.morlat@linphone.org
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
+
 #include <ortp/ortp.h>
-#include <bctoolbox/vfs.h>
 #include <signal.h>
 #include <stdlib.h>
 #ifndef _WIN32
@@ -55,10 +71,6 @@ int sound_init(int format)
 }
 #endif
 
-/*
-================main==================================main==================================main==================
-*/
-
 int main(int argc, char*argv[])
 {
 	RtpSession *session;
@@ -86,7 +98,35 @@ int main(int argc, char*argv[])
 		printf("%s",help);
 		return -1;
 	}
-
+	for (i=3;i<argc;i++)
+	{
+		if (strcmp(argv[i],"--noadapt")==0) adapt=FALSE;
+		if (strcmp(argv[i],"--format")==0){
+			i++;
+			if (i<argc){
+				if (strcmp(argv[i],"mulaw")==0){
+					format=MULAW;
+				}else
+				if (strcmp(argv[i],"alaw")==0){
+					format=ALAW;
+				}else{
+					printf("Unsupported format %s\n",argv[i]);
+					return -1;
+				}
+			}
+		}
+		else if (strcmp(argv[i],"--soundcard")==0){
+			soundcard=1;
+		}
+		else if (strcmp(argv[i],"--with-jitter")==0){
+			i++;
+			if (i<argc){
+				jittcomp=atoi(argv[i]);
+				printf("Using a jitter buffer of %i milliseconds.\n",jittcomp);
+			}
+		}
+	}
+	
 	outfile=fopen(argv[1],"wb");
 	if (outfile==NULL) {
 		perror("Cannot open file for writing");
@@ -98,33 +138,19 @@ int main(int argc, char*argv[])
 		sound_fd=sound_init(format);
 	}
 	
-	/*ortp init() 初始化*/
 	ortp_init();
 	ortp_scheduler_init();
-	ortp_set_log_level_mask(NULL, ORTP_DEBUG|ORTP_MESSAGE|ORTP_WARNING|ORTP_ERROR);
-
-	/* 设置信号处理函数 */
+	ortp_set_log_level_mask(ORTP_DEBUG|ORTP_MESSAGE|ORTP_WARNING|ORTP_ERROR);
 	signal(SIGINT,stop_handler);
 	session=rtp_session_new(RTP_SESSION_RECVONLY);	
 	rtp_session_set_scheduling_mode(session,1);
 	rtp_session_set_blocking_mode(session,1);
-
-	/*设置本地网络地址 端口号*/
 	rtp_session_set_local_addr(session,"0.0.0.0",atoi(argv[2]),-1);
 	rtp_session_set_connected_mode(session,TRUE);
-
-	
 	rtp_session_set_symmetric_rtp(session,TRUE);
-
-
-	/*设置自适应补偿功能*/
 	rtp_session_enable_adaptive_jitter_compensation(session,adapt);
 	rtp_session_set_jitter_compensation(session,jittcomp);
-
-	/*设置负载类型*/
 	rtp_session_set_payload_type(session,0);
-
-	/*设置信号回调函数*/
 	rtp_session_signal_connect(session,"ssrc_changed",(RtpCallback)ssrc_cb,0);
 	rtp_session_signal_connect(session,"ssrc_changed",(RtpCallback)rtp_session_reset,0);
 	
@@ -132,37 +158,24 @@ int main(int argc, char*argv[])
 	{
 		have_more=1;
 		while (have_more){
-			//Recv function
 			err=rtp_session_recv_with_ts(session,buffer,160,ts,&have_more);
-
 			if (err>0) stream_received=1;
-
 			/* this is to avoid to write to disk some silence before the first RTP packet is returned*/	
-			
-			if ((stream_received) && (err>0)) 
-			{
-				//写缓冲到文件
+			if ((stream_received) && (err>0)) {
 				size_t ret = fwrite(buffer,1,err,outfile);
-
 				if (sound_fd>0){
-
 					ret = write(sound_fd,buffer,err);
-
-					if (ret==-1)
-					{
+					if (ret==-1){
 						fprintf(stderr,"write to sound card failed (%s)",strerror(errno));
 					}
-
 				}
 			}
-			
 		}
 		ts+=160;
 		//ortp_message("Receiving packet.");
 	}
 	
 	rtp_session_destroy(session);
-
 	ortp_exit();
 	
 	ortp_global_stats_display();
