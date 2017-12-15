@@ -55,9 +55,8 @@ int sound_init(int format)
 }
 #endif
 
-
 /*
-================main==================
+================main==================================main==================================main==================
 */
 
 int main(int argc, char*argv[])
@@ -163,25 +162,35 @@ int main(int argc, char*argv[])
 		while (have_more){
 			//Recv function
 			err=rtp_session_recv_with_ts(session,buffer,160,ts,&have_more);
-			//if (err>0) stream_received=1;
+
+			if (err>0) stream_received=1;
+
 			/* this is to avoid to write to disk some silence before the first RTP packet is returned*/	
-			/*
-			if ((stream_received) && (err>0)) {
+			
+			if ((stream_received) && (err>0)) 
+			{
+				//写缓冲到文件
 				size_t ret = fwrite(buffer,1,err,outfile);
+
 				if (sound_fd>0){
+
 					ret = write(sound_fd,buffer,err);
-					if (ret==-1){
+
+					if (ret==-1)
+					{
 						fprintf(stderr,"write to sound card failed (%s)",strerror(errno));
 					}
+
 				}
 			}
-			*/
+			
 		}
 		ts+=160;
 		//ortp_message("Receiving packet.");
 	}
 	
 	rtp_session_destroy(session);
+
 	ortp_exit();
 	
 	ortp_global_stats_display();
